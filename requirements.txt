@@ -1,0 +1,7 @@
+termcolor
+simplejson
+requests
+lxml
+threadpool
+gevent
+PySocks
