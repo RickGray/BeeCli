@@ -16,17 +16,18 @@ BeeCli是一款基于开源PoC框架[Beebeeto-framework](https://github.com/n0tr
 
 	termcolor
 	simplejson
-	requests >= 2.6.0
-	lxml >= 3.4.0
-	threadpool == 1.2.7
-	gevent >= 1.0.0
+	requests
+	lxml
+	threadpool
+	gevent
+	PySocks
 	
 你可以通过`pip install -r requirements.txt`来安装这些依赖。
 
 ### Usage
 --
 
-目前BeeCli仅提供命令行调用的方式，共有三个功能模块`search(搜索)`，`fetch(目标抓取)`和`batch(批量扫描)`。
+目前BeeCli仅提供命令行调用的方式，共有三个功能模块`search(本地搜索)`，`fetch(目标抓取)`和`batch(批量扫描)`。
 
 	➜  BeeCli git:(master) ✗ python beecli.py -h
 
@@ -52,6 +53,8 @@ BeeCli是一款基于开源PoC框架[Beebeeto-framework](https://github.com/n0tr
 	  -h, --help            show this help message and exit
 
 你可以通过`python beecli.py <sub-command> -h`的方式来查看相关功能模块的详细帮助。
+
+通过[BeeBeeto](http://beebeeto.com)下载公开的PoC，将其放至`modules/`目录中以方便本地搜索和批量扫描使用。
 
 ### Screenshot
 
