@@ -22,6 +22,14 @@ def parse_argv():
 
     subparsers = parser.add_subparsers(help='sub-command help', dest='mode')
 
+    # Download Arguments
+    download_parser = subparsers.add_parser('download', help='download poc from beebeeto.com')
+    download_parser.add_argument('--cookie', dest='COOKIE', type=str,
+                                 help='use a login cookie to download some sepecial poc')
+    download_parser.add_argument('--proxy', dest='PROXY', type=str,
+                              help='use a proxy to connect target (support: http,socks4,socks5)')
+    download_parser.add_argument('poc', type=str, help='poc id (e.g. poc-2015-0086) or you can type all to fetch all')
+
     # Search Arguments
     search_parser = subparsers.add_parser('search', help='search poc you want with some keyword')
     search_parser.add_argument('keyword', type=str, help='keyword (e.g. Discuz, MacCMS, ...)')
