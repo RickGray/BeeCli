@@ -5,8 +5,7 @@ BeeCli是一款基于开源PoC框架[Beebeeto-framework](https://github.com/n0tr
 
 使用BeeCli可以很方便的对本地PoC模块进行搜索，通过Google Hacking语法批量抓取测试目标，并调用扫描功能对测试目标进行批量测试或者攻击。
 
-### Installation
---
+## Installation
 
 克隆BeeCli项目到本地:
 
@@ -24,8 +23,7 @@ BeeCli是一款基于开源PoC框架[Beebeeto-framework](https://github.com/n0tr
 	
 你可以通过`pip install -r requirements.txt`来安装这些依赖。
 
-### Usage
---
+## Usage
 
 目前BeeCli仅提供命令行调用的方式，共有四个功能模块`download(PoC下载）`，`search(本地搜索)`，`fetch(目标抓取)`和`batch(批量扫描)`。
 
@@ -60,7 +58,7 @@ BeeCli是一款基于开源PoC框架[Beebeeto-framework](https://github.com/n0tr
 
 如果需要编写自己的PoC，请参考编写[文档](http://docs.beebeeto.com/)。
 
-### Screenshot
+## Screenshot
 
 PoC搜索:
 ![](screenshots/example_one.png)
