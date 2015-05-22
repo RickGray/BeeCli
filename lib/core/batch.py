@@ -93,15 +93,17 @@ def batch_work(args):
 
     if args.poc != 'all':
         poc = import_module_with_path(args.poc)
+        funcs = (poc.__name__, (poc.MyPoc.verify if args.METHOD == 'verify' else poc.MyPoc.exploit))
+        outfile = 'batch_%s_result_' % args.METHOD + os.path.splitext(os.path.basename(args.poc))[0] + '.txt'
 
         logger.info('Batch startting with "%s"' % ('verify' if args.METHOD == 'verify' else 'exploit'))
         start_time = time.time()
         bt = BatchTest(seed_file=args.targets,
-                       funcs2run=(poc.__name__, (poc.MyPoc.verify if args.METHOD == 'verify' else poc.MyPoc.exploit)),
-                       result_file='batch_%s_result_' % args.METHOD
-                                   + os.path.splitext(os.path.basename(args.poc))[0] + '.txt',
+                       funcs2run=funcs,
+                       result_file=outfile,
                        thread_num=args.THREADS,
                        verbose=False)
+
         bt.start(norm_target_func=normalize_url)
         logger.info('total number: %d, success number: %d, failed number: %d'
                     % (bt.total_num, bt.success_num, (bt.total_num - bt.success_num)))
