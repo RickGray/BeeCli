@@ -32,6 +32,8 @@ def parse_argv():
 
     # Search Arguments
     search_parser = subparsers.add_parser('search', help='search poc you want with some keyword')
+    search_parser.add_argument('--path', dest='PATH', type=str,
+                               help='the path including pocs')
     search_parser.add_argument('keyword', type=str, help='keyword (e.g. Discuz, MacCMS, ...)')
 
     # Fetch Arguments

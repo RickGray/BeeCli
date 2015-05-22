@@ -8,12 +8,15 @@ from lib.core.logger import logger
 from lib.utils.common import import_all_modules_with_dirname
 
 
+_default_module_path = os.path.join(os.path.split(__file__)[0], '../../modules/')
+
+
 class SearchPoC(object):
-    def __init__(self, keyword, path='modules/'):
+    def __init__(self, keyword, path=None):
         self.keyword = keyword
 
         self._modules = None
-        self._module_path = os.path.join(os.path.split(__file__)[0], '../../modules/')
+        self._module_path = _default_module_path if not path else os.path.expanduser(path)
 
         self._load_all_modules()
 
@@ -40,7 +43,7 @@ class SearchPoC(object):
 
 
 def search_work(args):
-    repi = SearchPoC(args.keyword)
+    repi = SearchPoC(args.keyword, path=args.PATH)
     res = repi.search()
 
     for key, value in res.items():
