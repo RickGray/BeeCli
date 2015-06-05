@@ -50,8 +50,9 @@ def parse_argv():
     batch_parser = subparsers.add_parser('batch', help='batch scan with file include targets')
     batch_parser.add_argument('-m', '--mode', dest='METHOD', type=str, choices=['verify', 'exploit'],
                               help='verify or exploit mode to use (default: "verify")')
-    batch_parser.add_argument('--threads', dest='THREADS', type=int, default=50,
+    batch_parser.add_argument('--threads', dest='THREADS', type=int, default=5,
                               help='max number of threads to batch (default 50)')
+    batch_parser.add_argument('--module-dir', dest='MODULE_DIR', type=str, default='modules/')
     batch_parser.add_argument('--proxy', dest='PROXY', type=str,
                               help='use a proxy to connect target (support: http,socks4,socks5)')
     batch_parser.add_argument('poc', type=str, help='poc file to batch')
