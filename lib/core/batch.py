@@ -22,6 +22,9 @@ from lib.utils.common import init_proxy, normalize_url
 from lib.utils.common import import_module_with_path, import_all_modules_with_dirname
 
 
+_default_module_path = os.path.join(os.path.split(__file__)[0], '../../modules/')
+
+
 class BatchTest(object):
     default_options = {
         'target': None,
@@ -110,4 +113,22 @@ def batch_work(args):
         logger.info('cost %f seconds.' % (time.time() - start_time))
     else:
         # Add
-        pass
+        path = args.MODULE_DIR
+        module_path = _default_module_path if not path else os.path.expanduser(path)
+        pocs = import_all_modules_with_dirname(module_path)
+        funcs = [(poc.__name__, poc.MyPoc.verify if args.METHOD == 'verify' else poc.MyPoc.exploit) for poc in pocs]
+        outfile = 'batch_%s_result_all' % args.METHOD + '.txt'
+
+        logger.info('Batch all startting with "%s"' % ('verify' if args.METHOD == 'verify' else 'exploit'))
+
+        start_time = time.time()
+        bt = BatchTest(seed_file=args.targets,
+                       funcs2run=funcs,
+                       result_file=outfile,
+                       thread_num=args.THREADS,
+                       verbose=False)
+
+        bt.start(norm_target_func=normalize_url)
+        logger.info('total number: %d, success number: %d, failed number: %d'
+                    % (bt.total_num, bt.success_num, (bt.total_num - bt.success_num)))
+        logger.info('cost %f seconds.' % (time.time() - start_time))
