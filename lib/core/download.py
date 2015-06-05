@@ -64,16 +64,17 @@ def download_poc(poc_id, cookie):
         poc_file = requests.get(link, headers={'Cookie': cookie} if cookie else None, timeout=10)
     except Exception:
         logger.error('Download "%s" [Failed] (Connection Error)' % poc_id)
-        return
+        return False
 
     if _KEYWORDS not in poc_file.content:
         logger.error('Download "%s" [Failed] (Permission denied or POC not exist)' % poc_id)
-        return
+        return False
 
     ext = '.py'
     restore_path = module_path + poc_id.replace('-', '_') + ext
     open(restore_path, 'wb').write(poc_file.content)
     logger.critical('Download "%s" [Success]' % poc_id)
+    return True
 
 
 def download_work(args):
@@ -82,12 +83,17 @@ def download_work(args):
 
     cookie = args.COOKIE if args.COOKIE else None
 
+    n_success = 0
+    n_fail = 0
     if args.poc != 'all':
         poc_id = args.poc
         if not re.search(_ID_REGEX, poc_id):
             logger.error('Error format on poc id, please reinput.')
         else:
-            download_poc(poc_id, cookie)
+            if download_poc(poc_id, cookie):
+                n_success += 1
+            else:
+                n_fail += 1
     else:
         logger.info('Download all pocs from "beebeeto.com"')
         logger.warning('PoC existed will be overwrite, type [Enter] to continue.')
@@ -110,7 +116,14 @@ def download_work(args):
 
                     ids = parse_poc_id_from_content(content)
                     for poc_id in ids:
-                        download_poc(poc_id, cookie)
+                        if download_poc(poc_id, cookie):
+                            n_success += 1
+                        else:
+                            n_fail += 1
         else:
             logger.info('Download cancel.')
             return
+
+    logger.info('total number: %d, success number: %d, failed number: %d'
+                % (n_success + n_fail, n_success, n_fail))
+
