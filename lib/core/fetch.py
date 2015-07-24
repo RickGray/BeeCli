@@ -155,7 +155,7 @@ def parse_url_from_content(content):
     except Exception, e:
         return urls
 
-    pre_urls = doc.xpath('//div[@id="ires"]/ol/div[@class="srg"]/li[@class="g"]/div[@class="rc"]/h3/a/@href')
+    pre_urls = doc.xpath('//div[@id="ires"]/ol/div[@class="srg"]/div[@class="g"]/div[@class="rc"]/h3/a/@href')
     if pre_urls:
         for url in pre_urls:
             m = re.findall(r'http[s]?://([^&/?]*/??)', url)
